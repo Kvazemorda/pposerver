@@ -18,7 +18,6 @@ public class UsersController {
     @RequestMapping("/persons")
     public List<Users> getAllPerson(){
         List<Users> listPersons = usersDAO.getAllPerson();
-        System.out.println(listPersons);
         return listPersons;
     }
 }

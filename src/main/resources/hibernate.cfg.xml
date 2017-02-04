@@ -16,5 +16,6 @@
 
 
         <mapping class="com.pposerver.entity.Users"/>
+        <mapping class="com.pposerver.entity.Content"/>
     </session-factory>
 </hibernate-configuration>

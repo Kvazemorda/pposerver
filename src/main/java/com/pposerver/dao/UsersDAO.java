@@ -8,17 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-public class UsersDAO implements CRUD {
+public class UsersDAO {
 
     Session session = HibernateSessionFactory.getSessionFactory().openSession();
-
-    @Override
-    public void saveObject(Object o) {
-        Users person = (Users) o;
-        session.beginTransaction();
-        session.saveOrUpdate(person);
-        session.getTransaction().commit();
-    }
 
     public List<Users> getAllPerson(){
         Query query = session.createQuery("select person from Users person");
