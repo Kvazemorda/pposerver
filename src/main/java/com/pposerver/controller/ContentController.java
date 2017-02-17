@@ -18,4 +18,21 @@ public class ContentController {
     public List<Content> getListContent(){
         return contentDAO.getLastContent();
     }
+
+    // добавить только включенные новости и из категории домашние
+
+
+
+
+    @RequestMapping("/contentByDate")
+    public List<Content> getListContentByDate(long date){
+        long currentDate = date;
+        return contentDAO.getContentByDate(currentDate);
+    }
+
+    @RequestMapping("/parser")
+    public String getParser(long date){
+        Content content = contentDAO.getLastContent().get(1);
+        return "intro " + content.getIntrotext() + "\n\n" +  "fullText "+  content.getFulltext()  + "\n\n " + "image " + content.getImages();
+    }
 }

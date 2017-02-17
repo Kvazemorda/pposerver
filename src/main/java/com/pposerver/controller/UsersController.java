@@ -16,7 +16,7 @@ public class UsersController {
     public static Users users;
 
     @RequestMapping("/persons")
-    public List<Users> getAllPerson(){
+    public List<Users> getAllPerson(long date){
         List<Users> listPersons = usersDAO.getAllPerson();
         return listPersons;
     }

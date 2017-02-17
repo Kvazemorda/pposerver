@@ -1,5 +1,7 @@
 package com.pposerver.entity;
 
+import com.google.gson.Gson;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,6 +15,7 @@ public class Content {
     @Basic @Column private String fulltext;
     @Basic @Column private String images;
     @Temporal(TemporalType.DATE) @Column private Date created;
+    @Basic @Column private int state;
 
     public Content() {
     }
@@ -38,6 +41,7 @@ public class Content {
     }
 
     public void setIntrotext(String introtext) {
+
         this.introtext = introtext;
     }
 
@@ -54,7 +58,9 @@ public class Content {
     }
 
     public void setImages(String images) {
-        this.images = images;
+        Gson gson = new Gson();
+        ImageJson imageJson = gson.fromJson(images, ImageJson.class);
+        this.images = imageJson.getImage_intro();
     }
 
     public Date getCreated() {
@@ -63,6 +69,14 @@ public class Content {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     @Override
@@ -103,4 +117,5 @@ public class Content {
                 ", createdBy='" + created + '\'' +
                 '}';
     }
+
 }
