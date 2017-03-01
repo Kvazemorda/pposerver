@@ -4,7 +4,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class HibernateSessionFactory {
 
     private static SessionFactory sessionFactory = buildSessionFactory();
@@ -22,7 +24,6 @@ public class HibernateSessionFactory {
 
         return sessionFactory;
     }
-
     public static SessionFactory getSessionFactory(){
         return sessionFactory;
     }
