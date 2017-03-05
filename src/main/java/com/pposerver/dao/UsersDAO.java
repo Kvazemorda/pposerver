@@ -4,10 +4,9 @@ import com.pposerver.entity.Users;
 import com.pposerver.hibernate.HibernateSessionFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.context.annotation.Configuration;
+
 import java.util.List;
 
-@Configuration
 public class UsersDAO {
 
     Session session = HibernateSessionFactory.getSessionFactory().openSession();

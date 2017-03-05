@@ -6,12 +6,13 @@ import com.pposerver.hibernate.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class ContentController {
 
     @Autowired
@@ -32,6 +33,7 @@ public class ContentController {
     }
 
     @RequestMapping("/contentByTotalItems")
+    @ResponseBody
     public List<Content> getListContent(int totalItems){
         session = HibernateSessionFactory.getSessionFactory().openSession();
         tx = session.beginTransaction();
