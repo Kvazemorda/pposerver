@@ -3,13 +3,16 @@ package com.pposerver.dao;
 import com.pposerver.entity.Content;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.context.annotation.Configuration;
 
+import javax.ejb.Stateless;
 import java.util.Date;
 import java.util.List;
 
-@Configuration
+@Stateless
 public class ContentDAO implements CRUD {
+
+    public ContentDAO() {
+    }
 
     public List<Content> getLastContent(long date, Session session){
         Date currentDate = new Date(date);
@@ -36,5 +39,9 @@ public class ContentDAO implements CRUD {
         query.setMaxResults(10);
         System.out.println("общее кол-во записей " + totalItems);
         return query.list();
+    }
+
+    public String test(){
+        return "test";
     }
 }

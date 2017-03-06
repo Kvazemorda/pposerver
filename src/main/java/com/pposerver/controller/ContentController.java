@@ -1,46 +1,50 @@
 package com.pposerver.controller;
 
 import com.pposerver.dao.ContentDAO;
-import com.pposerver.entity.Content;
 import com.pposerver.hibernate.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.List;
+import javax.ejb.EJB;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-@Controller
-public class ContentController {
-
-    @Autowired
-    ContentDAO contentDAO;
+@WebServlet("/contentByTotalItems")
+public class ContentController extends HttpServlet{
+    @EJB ContentDAO contentDAO;
 
     Session session = null;
     Transaction tx = null;
 
-
-    @RequestMapping("/content")
-    public List<Content> getListContent(long date){
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int totalItems = Integer.valueOf(req.getParameter("totalItems"));
         session = HibernateSessionFactory.getSessionFactory().openSession();
         tx = session.beginTransaction();
-        List<Content> list = contentDAO.getLastContent(date, session);
-        tx.commit();
-        session.close();
-        return list;
-    }
 
-    @RequestMapping("/contentByTotalItems")
-    @ResponseBody
-    public List<Content> getListContent(int totalItems){
-        session = HibernateSessionFactory.getSessionFactory().openSession();
-        tx = session.beginTransaction();
-        List<Content> list = contentDAO.getContentByTotalItemsCount(totalItems, session);
+        //List<Content> list = contentDAO.getContentByTotalItemsCount(totalItems, session);
+        PrintWriter print = resp.getWriter();
+        print.print(contentDAO.test());
         tx.commit();
         session.close();
-        return list;
+        resp.setContentType("application/json");
+        JSONObject jsonObject = new JSONObject();
+        try {
+          //  jsonObject.put("list", list);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        PrintWriter out = resp.getWriter();
+        out.print(jsonObject);
+        out.flush();
+        out.close();
     }
 
 }
