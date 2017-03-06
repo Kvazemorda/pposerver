@@ -1,6 +1,7 @@
 package com.pposerver.controller;
 
 import com.pposerver.dao.ContentDAO;
+import com.pposerver.entity.Content;
 import com.pposerver.hibernate.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet("/contentByTotalItems")
 public class ContentController extends HttpServlet{
@@ -25,19 +27,17 @@ public class ContentController extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int totalItems = Integer.valueOf(req.getParameter("totalItems"));
+            int totalItems = Integer.valueOf(req.getParameter("totalItems"));
         session = HibernateSessionFactory.getSessionFactory().openSession();
         tx = session.beginTransaction();
-
-        //List<Content> list = contentDAO.getContentByTotalItemsCount(totalItems, session);
-        PrintWriter print = resp.getWriter();
-        print.print(contentDAO.test());
+        contentDAO = new ContentDAO();
+        List<Content> list = contentDAO.getContentByTotalItemsCount(totalItems, session);
         tx.commit();
         session.close();
         resp.setContentType("application/json");
         JSONObject jsonObject = new JSONObject();
         try {
-          //  jsonObject.put("list", list);
+            jsonObject.put("list", list);
         } catch (JSONException e) {
             e.printStackTrace();
         }
