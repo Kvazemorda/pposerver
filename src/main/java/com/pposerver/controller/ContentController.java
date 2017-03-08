@@ -1,12 +1,11 @@
 package com.pposerver.controller;
 
+import com.google.gson.Gson;
 import com.pposerver.dao.ContentDAO;
 import com.pposerver.entity.Content;
 import com.pposerver.hibernate.HibernateSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -35,14 +34,10 @@ public class ContentController extends HttpServlet{
         tx.commit();
         session.close();
         resp.setContentType("application/json");
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("list", list);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        resp.setCharacterEncoding("UTF-8");
+        Gson gson = new Gson();
         PrintWriter out = resp.getWriter();
-        out.print(jsonObject);
+        out.print(gson.toJson(list));
         out.flush();
         out.close();
     }
