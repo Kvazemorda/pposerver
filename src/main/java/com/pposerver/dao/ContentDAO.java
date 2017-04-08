@@ -14,34 +14,28 @@ public class ContentDAO implements CRUD {
     public ContentDAO() {
     }
 
-    public List<Content> getLastContent(long date, Session session){
-        Date currentDate = new Date(date);
-
-        String hql = "select content from Content content" +
-                " where content.state = 1 " +
-                " and content.created < :lastCreated" +
-                " order by content.created desc";
-
-        Query query = session.createQuery(hql);
-        query.setParameter("lastCreated", currentDate);
-        query.setMaxResults(10);
-        return query.list();
-    }
-
     public List<Content> getContentByTotalItemsCount(int totalItems, Session session){
 
         String hql = "select content from Content content" +
-                " where content.state = 1 " +
-                " order by content.created desc";
+                //" where content.state = 1 " +
+                " where (content.catid = 2 or content.catid = 14)  " +
+                "order by content.modified desc";
 
         Query query = session.createQuery(hql);
         query.setFirstResult(totalItems);
         query.setMaxResults(10);
-        System.out.println("общее кол-во записей " + totalItems);
         return query.list();
     }
 
-    public String test(){
-        return "test";
+    public int checkNewContent(long date, Session session){
+        String hql = "select content from Content content " +
+               // " where content.state = 1 " +
+                " where (content.created > :lastNew " +
+                " or content.modified > :lastNew) " +
+                " and (content.catid = 2 or content.catid = 14) ";
+
+        Query query = session.createQuery(hql);
+        query.setParameter("lastNew", new Date(date));
+        return query.list().size();
     }
 }

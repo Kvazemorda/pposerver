@@ -14,8 +14,11 @@ public class Content {
     @Basic @Column private String introtext;
     @Basic @Column private String fulltext;
     @Basic @Column private String images;
-    @Temporal(TemporalType.DATE) @Column private Date created;
+    @Temporal(TemporalType.TIMESTAMP) @Column private Date created;
+    @Temporal(TemporalType.TIMESTAMP) @Column private Date modified;
     @Basic @Column private int state;
+    @Basic @Column private int version;
+    @Basic @Column private int catid;
 
     public Content() {
     }
@@ -79,6 +82,14 @@ public class Content {
         this.state = state;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -118,4 +129,19 @@ public class Content {
                 '}';
     }
 
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public int getCatid() {
+        return catid;
+    }
+
+    public void setCatid(int catid) {
+        this.catid = catid;
+    }
 }
