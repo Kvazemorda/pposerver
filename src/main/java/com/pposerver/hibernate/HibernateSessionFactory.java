@@ -20,7 +20,7 @@ public class HibernateSessionFactory {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
         } catch (Exception e) {
             StandardServiceRegistryBuilder.destroy(registry);
-            throw new ExceptionInInitializerError("Intital SessionFactory faild" + e);
+            throw new ExceptionInInitializerError("Intital SessionFactory faild " + e);
         }
 
         return sessionFactory;

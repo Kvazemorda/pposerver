@@ -30,10 +30,9 @@ public class ContentDAO implements CRUD {
     public int checkNewContent(long date, Session session){
         String hql = "select content from Content content " +
                // " where content.state = 1 " +
-                " where (content.created > :lastNew " +
-                " or content.modified > :lastNew) " +
+                " where content.modified > :lastNew " +
                 " and (content.catid = 2 or content.catid = 14) ";
-
+        System.out.println(new Date(1499874463000l));
         Query query = session.createQuery(hql);
         query.setParameter("lastNew", new Date(date));
         return query.list().size();
