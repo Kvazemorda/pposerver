@@ -28,10 +28,11 @@ public class ContentController extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             int totalItems = Integer.valueOf(req.getParameter("totalItems"));
+            int maxResult = Integer.valueOf(req.getParameter("maxResult"));
         session = HibernateSessionFactory.getSessionFactory().openSession();
         tx = session.beginTransaction();
         contentDAO = new ContentDAO();
-        List<Content> list = contentDAO.getContentByTotalItemsCount(totalItems, session);
+        List<Content> list = contentDAO.getContentByTotalItemsCount(totalItems, maxResult, session);
         tx.commit();
         session.close();
         resp.setContentType("application/json");

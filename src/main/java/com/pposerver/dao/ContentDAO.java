@@ -14,7 +14,7 @@ public class ContentDAO implements CRUD {
     public ContentDAO() {
     }
 
-    public List<Content> getContentByTotalItemsCount(int totalItems, Session session){
+    public List<Content> getContentByTotalItemsCount(int totalItems, int maxResult, Session session){
 
         String hql = "select content from Content content" +
                 //" where content.state = 1 " +
@@ -23,7 +23,7 @@ public class ContentDAO implements CRUD {
 
         Query query = session.createQuery(hql);
         query.setFirstResult(totalItems);
-        query.setMaxResults(10);
+        query.setMaxResults(maxResult);
         return query.list();
     }
 
